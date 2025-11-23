@@ -36,11 +36,21 @@ const app = require("express")();
 app.get("/",(req,res)=>{
  res.json({
   
-    message:" hello babeedhjd "
+    message:" hello baedhjd " ,
+    name:"samir" ,
+    yetikai:"sagar" ,
+    status:200
  })
-}) 
+})  
+app.get("/about",(req,res)=>{ 
+  res.json({
+     message:"hello",
+     status:201,
+  })
+
+})
 
 app.listen(5300,()=>{
-  console.log(" sucssfly hosted on port 3000")
+  console.log(" sucssfly hosted on port 5300")
 
 }) 
