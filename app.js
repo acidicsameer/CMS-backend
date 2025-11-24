@@ -4,10 +4,14 @@ import express from "express";
 import dbConnect from "./db/dbConnect.js";
 import dotenv from "dotenv";
 import Blog from "./model/blog.model.js";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
+app.use(cors({origin:"http://localhost:5173",})
+); 
 const port = process.env.PORT;
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -79,18 +83,17 @@ app.delete("/blog/:id", async (req, res) => {
   });
 });
 
-//update 
-app.patch("/blog/:id",  async (req,res) => {
+//update
+app.patch("/blog/:id", async (req, res) => {
   const id = req.params.id;
-  const {title,subTitle,description } = req.body;
+  const { title, subTitle, description } = req.body;
 
-  const data =  await Blog.findByIdAndUpdate(id,
-    {
+  const data = await Blog.findByIdAndUpdate(id, {
     title,
     subTitle,
     description,
-  }); 
- 
+  });
+
   if (data) {
     res.status(200).json({
       message: " updated successfully ",
@@ -101,23 +104,23 @@ app.patch("/blog/:id",  async (req,res) => {
       message: " error on update  ",
     });
   }
-});  
-  
+});
+
 // app.patch("/blog", async(req,res)=>{
-//  const {title,subTitle,description}=req.body  
+//  const {title,subTitle,description}=req.body
 //   const foundContent = await Blog.findOne({
 //      title
-//   }) 
+//   })
 //   foundContent.title=title
 //   foundContent.subTitle=subTitle
-//   foundContent.description=description 
-//     await foundContent.save(); 
+//   foundContent.description=description
+//     await foundContent.save();
 //     res.json({
-//        " message ":"successfully updated ", 
-      
+//        " message ":"successfully updated ",
+
 //     })
-  
-// })  
+
+// })
 
 app.listen(port, () => {
   dbConnect();
